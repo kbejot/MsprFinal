@@ -4,10 +4,11 @@ namespace App\Entity;
 
 use App\Repository\AdminRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+
 
 #[ORM\Entity(repositoryClass: AdminRepository::class)]
-#[ORM\Table(name: '`admin`')]
-class Admin
+class Admin implements UserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -18,10 +19,10 @@ class Admin
     private ?string $username = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $password = null;
+    private ?string $email = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $email = null;
+    private ?string $password = null;
 
     public function getId(): ?int
     {
@@ -40,6 +41,18 @@ class Admin
         return $this;
     }
 
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): static
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
     public function getPassword(): ?string
     {
         return $this->password;
@@ -51,16 +64,26 @@ class Admin
 
         return $this;
     }
-
-    public function getEmail(): ?string
+    public function getUserIdentifier(): string
     {
-        return $this->email;
+        return $this->username;
     }
 
-    public function setEmail(string $email): static
+    public function getRoles(): array
     {
-        $this->email = $email;
 
-        return $this;
+        return ['ROLE_ADMIN'];
+    }
+
+    public function getSalt(): ?string
+    {
+        
+        return null;
+    }
+
+    public function eraseCredentials(): void
+    {
+      
+        $this->password = null;
     }
 }

@@ -16,13 +16,13 @@ class HomeController extends AbstractController
         ]);
     }
 
-    #[Route('/welcome', name: 'app_welcome')]
-    public function ifLog(): Response
-    {
-        return $this->render('home/welcome.html.twig', [
-            'controller_name' => 'HomeController',
-        ]);
-    }
+    // #[Route('/welcome', name: 'app_welcome')]
+    // public function ifLog(): Response
+    // {
+    //     return $this->render('home/welcome.html.twig', [
+    //         'controller_name' => 'HomeController',
+    //     ]);
+    // }
     #[Route('/faq', name: 'app_faq')]
     public function showFAQ(): Response
     {

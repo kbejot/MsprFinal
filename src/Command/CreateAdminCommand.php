@@ -2,22 +2,23 @@
 
 namespace App\Command;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use App\Entity\Admin;
 
 class CreateAdminCommand extends Command
 {
-    private $container;
+    private $entityManager;
+    private $passwordHasher;
 
-    public function __construct(ContainerInterface $container)
+    public function __construct(EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher)
     {
-        $this->container = $container;
-
-        // Appel du constructeur parent
+        $this->entityManager = $entityManager;
+        $this->passwordHasher = $passwordHasher;
+        
         parent::__construct();
     }
 
@@ -34,12 +35,13 @@ class CreateAdminCommand extends Command
         $admin = new Admin();
         $admin->setUsername('admin');
         $admin->setEmail('admin@mspr.com');
-        $admin->setPassword('MSPR2023');
+        
+        $hashedPassword = $this->passwordHasher->hashPassword($admin, '');
+        $admin->setPassword($hashedPassword);
 
         // Sauvegardez l'administrateur dans la base de données
-        $entityManager = $this->container->get('doctrine')->getManager();
-        $entityManager->persist($admin);
-        $entityManager->flush();
+        $this->entityManager->persist($admin);
+        $this->entityManager->flush();
 
         $output->writeln('Admin created successfully.');
 
