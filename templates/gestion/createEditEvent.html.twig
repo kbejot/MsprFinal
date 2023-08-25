@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gérez les concerts{% endblock %}
+
+{% block body %}
+{% include 'navigation/navbar.html.twig' %}
+
+<div class="container mt-4">
+    {{ form_start(form) }}
+
+    <div class="form-group">
+        {{ form_label(form.Artiste, 'Artiste', {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.Artiste, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.Artiste) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.scene, 'Scène', {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.scene, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.scene) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.Date, 'Date', {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.Date, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.Date) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.Horaire, 'Horaire', {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.Horaire, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.Horaire) }}
+    </div>
+<div class="mx-auto text-center mb-3">
+    {{ form_end(form) }}
+</div>
+
+    
+</div>
+
+<table class="table">
+<thead>
+    <tr>
+        <th>Action</th>
+        <th>Artiste</th>
+        <th>Scène</th>
+        <th>Date</th>
+        <th>Horaire</th>
+    </tr>
+</thead>
+<tbody>
+    {% for concert in concerts %}
+        <tr>
+            <td>
+                <a href="{{ path('app_delete_concert', { 'id': concert.id }) }}" 
+                   onclick="return confirm('Êtes-vous sûr de supprimer le concert?');">
+                   <i class="fa fa-trash"></i>
+                </a>
+            </td>
+            <td>{{ concert.Artiste }}</td>
+            <td>{{ concert.scene }}</td>
+            <td>{{ concert.Date|date('d-m-Y') }}</td>
+            <td>{{ concert.Horaire|date('H') }} h</td>
+        </tr>
+    {% endfor %}
+</tbody>
+</table>
+
+
+{% endblock %}
