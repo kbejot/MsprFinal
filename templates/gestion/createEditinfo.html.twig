@@ -1,10 +1,46 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Gérez les évènements{% endblock %}
+{% block title %}Gérez les informations{% endblock %}
 
 {% block body %}
-    {% include 'navigation/navbar.html.twig' %}
+{% include 'navigation/navbar.html.twig' %}
 
-<div> welcome </div>
-    
+<div class="container mt-4">
+    {{ form_start(form) }}
+
+    <div class="form-group">
+        {{ form_label(form.MessageInfo, "Message d'information", {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.MessageInfo, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.MessageInfo) }}
+    </div>
+
+<div class="mx-auto text-center mb-3">
+    {{ form_end(form) }}
+</div>
+
+
+</div>
+
+<table class="table">
+<thead>
+    <tr>
+        <th>Message</th>
+    </tr>
+</thead>
+<tbody>
+    {% for info in infos %}
+        <tr>
+            <td>
+                <a href="{{ path('app_delete_info', { 'id': info.id }) }}" 
+                   onclick="return confirm('Êtes-vous sûr de supprimer le message?');">
+                   <i class="fa fa-trash"></i>
+                </a>
+            </td>
+            <td>{{ info.MessageInfo }}</td>
+        </tr>
+    {% endfor %}
+</tbody>
+</table>
+
+
 {% endblock %}
