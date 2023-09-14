@@ -17,9 +17,6 @@ class Partenaires
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $link = null;
-
     #[ORM\Column(type: Types::BLOB)]
     private $icone = null;
 
@@ -39,19 +36,7 @@ class Partenaires
 
         return $this;
     }
-
-    public function getLink(): ?string
-    {
-        return $this->link;
-    }
-
-    public function setLink(string $link): static
-    {
-        $this->link = $link;
-
-        return $this;
-    }
-
+    
     public function getIcone()
     {
         return $this->icone;

@@ -8,8 +8,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-Use Symfony\Component\HttpFoundation\File\Exception\FileException;
-
 class ReseauxController extends AbstractController
 {
     #[Route('/reseaux', name: 'app_reseaux')]
@@ -24,22 +22,13 @@ class ReseauxController extends AbstractController
             /** @var UploadedFile $iconeFile */
             $iconeFile = $form['icone']->getData();
 
-        if ($iconeFile) {
+        if ($iconeFile)
+        {
             $originalFilename = pathinfo($iconeFile->getClientOriginalName(), PATHINFO_FILENAME);
             $safeFilename = transliterator_transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
             $newFilename = $safeFilename.'-'.uniqid().'.'.$iconeFile->guessExtension();
-
-        try {
-            $iconeFile->move(
-                $this->getParameter('images_directory'),
-                $newFilename
-            );
-        } catch (FileException $e) {
-            // ... handle exception if something happens during file upload
-        }
-
-    $reseau->setIcone($newFilename);
-}
+            $reseau->setIcone($newFilename);
+         }
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($reseau);
             $entityManager->flush();
@@ -65,7 +54,6 @@ class ReseauxController extends AbstractController
             $entityManager->flush();
         }
 
-        // Redirigez vers la page de gestion des concerts après la suppression.
         return $this->redirectToRoute('app_reseaux');
     }
 

@@ -3,8 +3,52 @@
 {% block title %}Gérez les Partenaires{% endblock %}
 
 {% block body %}
-    {% include 'navigation/navbar.html.twig' %}
+{% include 'navigation/navbar.html.twig' %}
 
-<div> welcome </div>
+<div class="container mt-4">
+    {{ form_start(form) }}
+
+    <div class="form-group">
+        {{ form_label(form.nom, 'Nom du partenaire', {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.nom) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.icone, 'Icône', {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.icone, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.icone) }}
+    </div>
     
+    <div class="mx-auto text-center mb-3">
+        {{ form_end(form) }}
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Action</th>
+            <th>Nom du partenaire</th>
+            <th>Icône</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for partenaire in partenaires %}
+            <tr>
+                <td>
+                    {# <a href="{{ path('app_delete_reseaux', { 'id': partenaire.id }) }}" 
+                       onclick="return confirm('Êtes-vous sûr de supprimer le réseau?');">
+                       <i class="fa fa-trash"></i>
+                    </a> #}
+                </td>
+                <td>{{ partenaire.nom }}</td>
+                <td>
+                    <img src="{{ asset('assets/images/' ~ partenaire.icone) }}" alt="{{ partenaire.nom }}" width="50">
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
 {% endblock %}
