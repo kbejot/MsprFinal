@@ -17,11 +17,6 @@ class PartName extends AbstractType
     {
         $builder
             ->add('nom', TextType::class, ['label' => 'Nom'])
-            ->add('icone', FileType::class, [
-                'label' => 'Icône (image)',
-                'mapped' => true,
-                'required' => false
-            ])
             ->add('save', SubmitType::class, ['label' => 'Ajouter le réseau'])
         ;
     }

@@ -3,10 +3,12 @@
 namespace App\Entity;
 
 use App\Repository\PartenairesRepository;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
 
 #[ORM\Entity(repositoryClass: PartenairesRepository::class)]
+#[ApiResource]
+
 class Partenaires
 {
     #[ORM\Id]
@@ -16,9 +18,6 @@ class Partenaires
 
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
-
-    #[ORM\Column(type: Types::BLOB)]
-    private $icone = null;
 
     public function getId(): ?int
     {
@@ -36,16 +35,5 @@ class Partenaires
 
         return $this;
     }
-    
-    public function getIcone()
-    {
-        return $this->icone;
-    }
 
-    public function setIcone($icone): static
-    {
-        $this->icone = $icone;
-
-        return $this;
-    }
 }

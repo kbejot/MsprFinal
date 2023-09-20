@@ -4,8 +4,11 @@ namespace App\Entity;
 
 use App\Repository\InfoSecuRepository;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
 
 #[ORM\Entity(repositoryClass: InfoSecuRepository::class)]
+#[ApiResource]
+
 class InfoSecu
 {
     #[ORM\Id]

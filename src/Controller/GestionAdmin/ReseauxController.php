@@ -19,16 +19,6 @@ class ReseauxController extends AbstractController
         
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            /** @var UploadedFile $iconeFile */
-            $iconeFile = $form['icone']->getData();
-
-        if ($iconeFile)
-        {
-            $originalFilename = pathinfo($iconeFile->getClientOriginalName(), PATHINFO_FILENAME);
-            $safeFilename = transliterator_transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
-            $newFilename = $safeFilename.'-'.uniqid().'.'.$iconeFile->guessExtension();
-            $reseau->setIcone($newFilename);
-         }
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($reseau);
             $entityManager->flush();

@@ -5,8 +5,10 @@ namespace App\Entity;
 use App\Repository\RencontresRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
 
 #[ORM\Entity(repositoryClass: RencontresRepository::class)]
+#[ApiResource]
 class Rencontres
 {
     #[ORM\Id]

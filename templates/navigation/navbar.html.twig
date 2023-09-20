@@ -18,20 +18,25 @@
                 <li class="nav-item">
                     <a class="nav-link" href="billeterie">Billeterie</a>
                 </li>
+                {% if is_granted('ROLE_ADMIN') %}
                 <li class="nav-item">
                     <a class="nav-link" href="login">Connexion</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="event">Gestion des concerts</a>
+                    <a class="nav-link" href="event">Gestion concerts</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="info">Gestion des informations</a>
+                    <a class="nav-link" href="info">Gestion informations</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="part">Gestion des Partenaires</a>
+                    <a class="nav-link" href="part">Gestion Partenaires</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="reseaux">Gestion des Réseaux</a>
+                    <a class="nav-link" href="reseaux">Gestion Réseaux</a>
+                </li>
+                 {% endif %}
+                 <li class="nav-item">
+                    <a class="nav-link" href="inscription">Inscription</a>
                 </li>
             </ul>
         </div>

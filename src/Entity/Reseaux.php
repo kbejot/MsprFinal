@@ -5,8 +5,11 @@ namespace App\Entity;
 use App\Repository\ReseauxRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\ApiResource;
 
 #[ORM\Entity(repositoryClass: ReseauxRepository::class)]
+#[ApiResource]
+
 class Reseaux
 {
     #[ORM\Id]
@@ -16,9 +19,6 @@ class Reseaux
 
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
-
-    #[ORM\Column(type: Types::BLOB)]
-    private $icone = null;
 
     public function getId(): ?int
     {
@@ -37,15 +37,4 @@ class Reseaux
         return $this;
     }
 
-    public function getIcone()
-    {
-        return $this->icone;
-    }
-
-    public function setIcone($icone): static
-    {
-        $this->icone = $icone;
-
-        return $this;
-    }
 }

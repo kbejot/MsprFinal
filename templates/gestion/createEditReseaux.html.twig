@@ -14,11 +14,6 @@
         {{ form_errors(form.nom) }}
     </div>
 
-    <div class="form-group">
-        {{ form_label(form.icone, 'Icône', {'label_attr': {'class': 'form-label'}}) }}
-        {{ form_widget(form.icone, {'attr': {'class': 'form-control'}}) }}
-        {{ form_errors(form.icone) }}
-    </div>
     
     <div class="mx-auto text-center mb-3">
         {{ form_end(form) }}
@@ -30,7 +25,6 @@
         <tr>
             <th>Action</th>
             <th>Nom du réseau</th>
-            <th>Icône</th>
         </tr>
     </thead>
     <tbody>
@@ -43,9 +37,6 @@
                     </a>
                 </td>
                 <td>{{ reseau.nom }}</td>
-                <td>
-                    <img src="{{ asset('assets/images/' ~ reseau.icone) }}" alt="{{ reseau.nom }}" width="50">
-                </td>
             </tr>
         {% endfor %}
     </tbody>

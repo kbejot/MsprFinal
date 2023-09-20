@@ -20,27 +20,33 @@ class PartController extends AbstractController
         
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            /** @var UploadedFile $iconeFile */
-            $iconeFile = $form['icone']->getData();
 
-        if ($iconeFile)
-        {
-            $originalFilename = pathinfo($iconeFile->getClientOriginalName(), PATHINFO_FILENAME);
-            $safeFilename = transliterator_transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
-            $newFilename = $safeFilename.'-'.uniqid().'.'.$iconeFile->guessExtension();
-            $part->setIcone($newFilename);
-         }
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($part);
             $entityManager->flush();
     
-            return $this->redirectToRoute('app_reseaux'); 
+            return $this->redirectToRoute('app_part'); 
         }
     
         return $this->render('gestion/createEditPart.html.twig', [
             'form' => $form->createView(),
             'partenaires' => $parts
         ]);
+    }
+    /**
+     * @Route("/part/delete/{id}", name="app_delete_part")
+     */
+    public function delete(int $id): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $part = $entityManager->getRepository(Partenaires::class)->find($id);
+
+        if ($part) {
+            $entityManager->remove($part);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('app_part');
     }
 
 }
