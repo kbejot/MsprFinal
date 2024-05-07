@@ -13,18 +13,20 @@ use App\Form\ConcertType;
 class EventController extends AbstractController
     
 {
+    public function __construct(private readonly EntityManagerInterface $entityManager)
+    {}
+
     #[Route('/event', name: 'app_event')]
-    public function index(Request $request, EntityManagerInterface $em): Response
+    public function index(Request $request): Response
 {
     $concert = new Concert();
     $form = $this->createForm(ConcertType::class, $concert);
-    $concerts = $this->getDoctrine()->getRepository(Concert::class)->findAll();
+    $concerts = $this->entityManager->getRepository(Concert::class)->findAll();
     
     $form->handleRequest($request);
     if ($form->isSubmitted() && $form->isValid()) {
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($concert);
-        $entityManager->flush();
+        $this->entityManager->persist($concert);
+        $this->entityManager->flush();
 
         return $this->redirectToRoute('app_event'); // or another route if needed
     }
@@ -35,20 +37,17 @@ class EventController extends AbstractController
     ]);
 }
 
-/**
- * @Route("/event/delete/{id}", name="app_delete_concert")
- */
+    #[Route('/event/delete/{id}', name: 'app_delete_concert')]
+
 public function delete(int $id): Response
 {
-    $entityManager = $this->getDoctrine()->getManager();
-    $concert = $entityManager->getRepository(Concert::class)->find($id);
+    $concert = $this->entityManager->getRepository(Concert::class)->find($id);
 
     if ($concert) {
-        $entityManager->remove($concert);
-        $entityManager->flush();
+        $this->entityManager->remove($concert);
+        $this->entityManager->flush();
     }
 
-    // Redirigez vers la page de gestion des concerts après la suppression.
     return $this->redirectToRoute('app_event');
 }
 

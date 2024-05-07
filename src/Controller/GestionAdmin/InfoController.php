@@ -12,18 +12,19 @@ use App\Form\InfosType;
 
 class InfoController extends AbstractController
 {
+    public function __construct(private readonly EntityManagerInterface $entityManager)
+    {}
     #[Route('/info', name: 'app_info')]
-    public function index(Request $request, EntityManagerInterface $em): Response
+    public function index(Request $request): Response
         {
         $info = new Infos();
         $form = $this->createForm(InfosType::class, $info);
-        $infos = $this->getDoctrine()->getRepository(Infos::class)->findAll();
+        $infos = $this->entityManager->getRepository(Infos::class)->findAll();
         
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($info);
-            $entityManager->flush();
+            $this->entityManager->persist($info);
+            $this->entityManager->flush();
     
             return $this->redirectToRoute('app_info');
         }
@@ -33,21 +34,18 @@ class InfoController extends AbstractController
         ]);
     }
 
-    /**
-    * @Route("/infos/delete/{id}", name="app_delete_info")
-    */
-public function delete(int $id): Response
-{
-    $entityManager = $this->getDoctrine()->getManager();
-    $info = $entityManager->getRepository(Infos::class)->find($id);
 
-    if ($info) {
-        $entityManager->remove($info);
-        $entityManager->flush();
+    #[Route('/infos/delete/{id}', name: 'app_delete_info')]
+    public function delete(int $id): Response
+    {
+        $info = $this->entityManager->getRepository(Infos::class)->find($id);
+
+        if ($info) {
+            $this->entityManager->remove($info);
+            $this->entityManager->flush();
+        }
+
+        return $this->redirectToRoute('app_info');
     }
-
-    // Redirigez vers la page de gestion des concerts après la suppression.
-    return $this->redirectToRoute('app_info');
-}
 
 }
