@@ -7,6 +7,7 @@ use App\Repository\InfosRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: InfosRepository::class)]
+#[ORM\Table(name: 'infos')]
 #[ApiResource]
 class Infos
 {

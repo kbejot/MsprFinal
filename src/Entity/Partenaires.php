@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 
 #[ORM\Entity(repositoryClass: PartenairesRepository::class)]
+#[ORM\table(name: "partenaires")]
 #[ApiResource]
 
 class Partenaires

@@ -2,9 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Admin;
 use App\Entity\User;
-use App\Form\AdminType;
+use App\Form\UserType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,19 +16,19 @@ class UserController extends AbstractController
     #[Route('/inscription', name: 'inscription')]
     public function inscription(Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $encoder): Response
     {
-        $admin = new Admin();
+        $user = new User();
 
-        $form = $this->createForm(AdminType::class, $admin);
+        $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $encodedPassword = $encoder->encodePassword($admin, $admin->getPassword());
-            $admin->setUsername($form->get('_username')->getData());
-            $admin->setEmail($form->get('_email')->getData());
-            $admin->setRoles([Admin::ROLE_USER]);
-            $admin->setPassword($encodedPassword);
+            $encodedPassword = $encoder->encodePassword($user, $user->getPassword());
+            $user->setUsername($form->get('_username')->getData());
+            $user->setEmail($form->get('_email')->getData());
+            $user->setRoles([User::ROLE_ADMIN]);
+            $user->setPassword($encodedPassword);
 
-            $em->persist($admin);
+            $em->persist($user);
             $em->flush();
 
             return $this->redirectToRoute('app_login');

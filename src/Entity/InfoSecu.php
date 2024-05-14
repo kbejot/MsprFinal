@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 
 #[ORM\Entity(repositoryClass: InfoSecuRepository::class)]
+#[ORM\Table(name: "info_secu")]
 #[ApiResource]
 
 class InfoSecu

@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 
 #[ORM\Entity(repositoryClass: RencontreRepository::class)]
+#[ORM\Table(name: 'rencontre')]
 #[ApiResource]
 
 class Rencontre
