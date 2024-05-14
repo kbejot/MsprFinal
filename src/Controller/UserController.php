@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Admin;
+use App\Entity\User;
 use App\Form\AdminType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,6 +24,9 @@ class UserController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $encodedPassword = $encoder->encodePassword($admin, $admin->getPassword());
+            $admin->setUsername($form->get('_username')->getData());
+            $admin->setEmail($form->get('_email')->getData());
+            $admin->setRoles([Admin::ROLE_USER]);
             $admin->setPassword($encodedPassword);
 
             $em->persist($admin);

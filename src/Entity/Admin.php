@@ -10,6 +10,10 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[ORM\Entity(repositoryClass: AdminRepository::class)]
 class Admin implements UserInterface
 {
+
+    public const ROLE_ADMIN = 'ROLE_ADMIN';
+    public const ROLE_USER = 'ROLE_USER';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -23,6 +27,8 @@ class Admin implements UserInterface
 
     #[ORM\Column(length: 255)]
     private ?string $password = null;
+    #[ORM\Column(type: 'json')]
+    private ?array $roles = [];
 
     public function getId(): ?int
     {
@@ -71,8 +77,13 @@ class Admin implements UserInterface
 
     public function getRoles(): array
     {
+        return $this->roles;
+    }
 
-        return ['ROLE_ADMIN'];
+    public function setRoles(array $roles): static
+    {
+        $this->roles = $roles;
+        return $this;
     }
 
     public function getSalt(): ?string
