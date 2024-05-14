@@ -7,7 +7,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use App\Entity\Admin;
+use App\Entity\User;
 
 class CreateAdminCommand extends Command
 {
@@ -32,18 +32,18 @@ class CreateAdminCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         // Créez un nouvel administrateur
-        $admin = new Admin();
-        $admin->setUsername('admin');
-        $admin->setEmail('admin@mspr.com');
+        $user = new User();
+        $user->setUsername('admin');
+        $user->setEmail('admin@mspr.com');
         
-        $hashedPassword = $this->passwordHasher->hashPassword($admin, '');
-        $admin->setPassword($hashedPassword);
+        $hashedPassword = $this->passwordHasher->hashPassword($user, '');
+        $user->setPassword($hashedPassword);
 
         // Sauvegardez l'administrateur dans la base de données
-        $this->entityManager->persist($admin);
+        $this->entityManager->persist($user);
         $this->entityManager->flush();
 
-        $output->writeln('Admin created successfully.');
+        $output->writeln('User created successfully.');
 
         return Command::SUCCESS;
     }

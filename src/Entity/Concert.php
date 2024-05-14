@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 
 #[ORM\Entity(repositoryClass: ConcertRepository::class)]
+#[ORM\Table(name: 'concert')]
 #[ApiResource]
 #[ApiFilter(DateFilter::class, properties: ["date", "horaire"])]
 #[ApiFilter(DateFilter::class, properties: ["scene", "exact"])]
@@ -21,11 +22,12 @@ class Concert
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $Artiste = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $scene = null;
+    #[ORM\ManyToOne(targetEntity: Artiste::class, inversedBy: "concerts")]
+    #[ORM\JoinColumn(name: "artiste", referencedColumnName: "id")]
+    private ?Artiste $artiste = null;
+    #[ORM\ManyToOne(targetEntity: Scene::class, inversedBy: "concerts")]
+    #[ORM\JoinColumn(name: "scene", referencedColumnName: "id")]
+    private ?Scene $scene = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $Date = null;
@@ -38,27 +40,26 @@ class Concert
         return $this->id;
     }
 
-    public function getArtiste(): ?string
+    public function getArtiste(): ?Artiste
     {
-        return $this->Artiste;
+        return $this->artiste;
     }
 
-    public function setArtiste(string $Artiste): static
+    public function setArtiste(?Artiste $artiste): static
     {
-        $this->Artiste = $Artiste;
+        $this->artiste = $artiste;
 
         return $this;
     }
 
-    public function getScene(): ?string
+    public function getScene(): ?Scene
     {
         return $this->scene;
     }
 
-    public function setScene(string $scene): static
+    public function setScene(?Scene $scene): self
     {
         $this->scene = $scene;
-
         return $this;
     }
 

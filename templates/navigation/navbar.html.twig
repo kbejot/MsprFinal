@@ -20,29 +20,29 @@
                 </li>
                 {% if is_granted('ROLE_ADMIN') %}
                 <li class="nav-item">
-                    <a class="nav-link" href="inscription">Inscription</a>
+                    <a class="nav-link" href="{{ path('app_event') }}">Gestion concerts</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="event">Gestion concerts</a>
+                    <a class="nav-link" href="{{ path('app_info') }}">Gestion informations</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="info">Gestion informations</a>
+                    <a class="nav-link" href="{{ path('app_part') }}">Gestion Partenaires</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="part">Gestion Partenaires</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="reseaux">Gestion Réseaux</a>
+                    <a class="nav-link" href="{{ path('app_reseaux') }}">Gestion Réseaux</a>
                 </li>
                  <li class="nav-item">
                 <a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
                 </li>
                  {% endif %}
-                 {% if not is_granted('ROLE_ADMIN') %}
+                 {% if app.user == null %}
                  <li class="nav-item">
-                    <a class="nav-link" href="login">Connexion</a>
+                    <a class="nav-link" href="{{ path('app_login') }}">Connexion</a>
                 </li>
                 {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('inscription') }}">Inscription</a>
+                </li>
             </ul>
         </div>
     </div>

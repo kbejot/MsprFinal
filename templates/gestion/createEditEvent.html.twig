@@ -6,50 +6,71 @@
     {% include 'navigation/navbar.html.twig' %}
 
     <div class="container mt-4">
-        {{ form_start(form) }}
+        {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': true}}) }}
 
-        <div class="form-group">
-            {{ form_label(form.Artiste, 'Artiste', {'label_attr': {'class': 'form-label'}}) }}
-            {{ form_widget(form.Artiste, {'attr': {'class': 'form-control'}}) }}
-            {{ form_errors(form.Artiste, {'attr': {'class': 'text-danger'}}) }}
+        <div class="form-row">
+            <div class="col-md-6 mb-3">
+                {{ form_label(form.artiste, 'Artiste', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.artiste) }}
+                {{ form_errors(form.artiste, {'attr': {'class': 'text-danger'}}) }}
+            </div>
+
+            <div class="col-md-6 mb-3">
+                {{ form_label(form.scene, 'Scène', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.scene) }}
+                {{ form_errors(form.scene) }}
+            </div>
         </div>
 
-    <div class="form-group">
-        {{ form_label(form.Date, 'Date', {'label_attr': {'class': 'form-label'}}) }}
-        {{ form_widget(form.Date, {'attr': {'class': 'form-control'}}) }}
-        {{ form_errors(form.Date) }}
-    </div>
+        <div class="form-row">
+            <div class="col-md-6 mb-3">
+                {{ form_label(form.date, 'Date', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.date, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.date) }}
+            </div>
 
-        <div class="mx-auto text-center mb-3">
+            <div class="col-md-6 mb-3">
+                {{ form_label(form.horaire, 'Horaire', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.horaire, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.horaire) }}
+            </div>
+        </div>
+
+        <div class="text-center mb-3">
+            {{ form_row(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
             {{ form_end(form) }}
         </div>
     </div>
 
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Actions</th>
-            <th>Artiste</th>
-            <th>Scène</th>
-            <th>Date</th>
-            <th>Horaire</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for concert in concerts %}
+    <div class="container mt-5">
+        <table class="table table-hover">
+            <thead class="thead-dark">
             <tr>
-                <td>
-                    <a href="{{ path('app_delete_concert', { 'id': concert.id }) }}"
-                       onclick="return confirm('Êtes-vous sûr de supprimer le concert {{ concert.Artiste }}?');">
-                        <i class="fa fa-trash text-danger"></i>
-                    </a>
-                </td>
-                <td>{{ concert.Artiste }}</td>
-                <td>{{ concert.scene }}</td>
-                <td>{{ concert.Date|date('d-m-Y') }}</td>
-                <td>{{ concert.Horaire|date('H') }} h</td>
+                <th>Actions</th>
+                <th>Artiste</th>
+                <th>Scène</th>
+                <th>Date</th>
+                <th>Horaire</th>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            {% for concert in concerts %}
+                <tr>
+                    <td>
+                        <a href="{{ path('app_delete_concert', { 'id': concert.id }) }}"
+                           class="btn btn-danger btn-sm"
+                           onclick="return confirm('Êtes-vous sûr de supprimer ce concert ?');">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                    </td>
+                    <td>{{ concert.artiste.name }}</td>
+                    <td>{{ concert.scene.number }}</td>
+                    <td>{{ concert.date|date('d-m-Y') }}</td>
+                    <td>{{ concert.horaire|date('H:i') }} h</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
 {% endblock %}
