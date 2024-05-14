@@ -32,7 +32,7 @@ class EventController extends AbstractController
             ]);
 
             $existingScene = $this->entityManager->getRepository(Scene::class)->findOneBy([
-                'number' => $form->get('scene')->getData()->getNumero()
+                'number' => $form->get('scene')->getData()->getNumber()
             ]);
 
             if ($existingArtiste) {
