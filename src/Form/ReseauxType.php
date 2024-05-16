@@ -11,7 +11,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class ReseauxName extends AbstractType
+class ReseauxType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

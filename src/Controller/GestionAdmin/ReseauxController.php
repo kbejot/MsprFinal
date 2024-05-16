@@ -3,7 +3,7 @@
 namespace App\Controller\GestionAdmin;
 
 use App\Entity\Reseaux;
-use App\Form\ReseauxName;
+use App\Form\ReseauxType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,7 +17,7 @@ class ReseauxController extends AbstractController
     public function index(Request $request): Response
     {
         $reseau = new Reseaux();
-        $form = $this->createForm(ReseauxName::class, $reseau);
+        $form = $this->createForm(ReseauxType::class, $reseau);
         $reseaux = $this->entityManager->getRepository(Reseaux::class)->findAll();
 
         $form->handleRequest($request);

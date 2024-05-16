@@ -57,20 +57,19 @@ class EventController extends AbstractController
             'form' => $form->createView(),
             'concerts' => $this->entityManager->getRepository(Concert::class)->findAll(),
         ]);
-}
-
-    #[Route('/event/delete/{id}', name: 'app_delete_concert')]
-
-public function delete(int $id): Response
-{
-    $concert = $this->entityManager->getRepository(Concert::class)->find($id);
-
-    if ($concert) {
-        $this->entityManager->remove($concert);
-        $this->entityManager->flush();
     }
 
-    return $this->redirectToRoute('app_event');
-}
+    #[Route('/event/delete/{id}', name: 'app_delete_concert')]
+    public function delete(int $id): Response
+    {
+        $concert = $this->entityManager->getRepository(Concert::class)->find($id);
+
+        if ($concert) {
+            $this->entityManager->remove($concert);
+            $this->entityManager->flush();
+        }
+
+        return $this->redirectToRoute('app_event');
+    }
 
 }

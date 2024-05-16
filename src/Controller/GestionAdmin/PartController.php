@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Partenaires;
-use App\Form\PartName;
+use App\Form\PartType;
 
 class PartController extends AbstractController
 {
@@ -20,7 +20,7 @@ class PartController extends AbstractController
     public function index(Request $request): Response
     {
         $part = new Partenaires();
-        $form = $this->createForm(PartName::class, $part);
+        $form = $this->createForm(PartType::class, $part);
         $parts = $this->entityManager->getRepository(Partenaires::class)->findAll();
         
         $form->handleRequest($request);
