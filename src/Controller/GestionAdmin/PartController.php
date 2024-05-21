@@ -3,6 +3,7 @@
 namespace App\Controller\GestionAdmin;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,6 +18,7 @@ class PartController extends AbstractController
 
     }
     #[Route('/part', name: 'app_part')]
+    #[Security("is_granted('ROLE_ADMIN')")]
     public function index(Request $request): Response
     {
         $part = new Partenaires();
@@ -41,6 +43,7 @@ class PartController extends AbstractController
      * @Route("/part/delete/{id}", name="app_delete_part")
      */
     #[Route('/part/delete/{id}', name: 'app_delete_part')]
+    #[Security("is_granted('ROLE_ADMIN')")]
     public function delete(int $id): Response
     {
         $part = $this->entityManager->getRepository(Partenaires::class)->find($id);

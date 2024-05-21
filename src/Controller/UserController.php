@@ -25,7 +25,7 @@ class UserController extends AbstractController
             $encodedPassword = $encoder->encodePassword($user, $user->getPassword());
             $user->setUsername($form->get('_username')->getData());
             $user->setEmail($form->get('_email')->getData());
-            $user->setRoles([User::ROLE_ADMIN]);
+            $user->setRoles([User::ROLE_USER]);
             $user->setPassword($encodedPassword);
 
             $em->persist($user);

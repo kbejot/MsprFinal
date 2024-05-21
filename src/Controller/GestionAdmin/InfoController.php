@@ -3,6 +3,7 @@
 namespace App\Controller\GestionAdmin;
 
 use App\Entity\Infos;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,6 +16,7 @@ class InfoController extends AbstractController
     public function __construct(private readonly EntityManagerInterface $entityManager)
     {}
     #[Route('/info', name: 'app_info')]
+    #[Security("is_granted('ROLE_ADMIN')")]
     public function index(Request $request): Response
         {
         $info = new Infos();

@@ -4,6 +4,7 @@ namespace App\Controller\GestionAdmin;
 
 use App\Entity\Artiste;
 use App\Entity\Scene;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,6 +20,7 @@ class EventController extends AbstractController
     {}
 
     #[Route('/event', name: 'app_event')]
+    #[Security("is_granted('ROLE_ADMIN')")]
     public function index(Request $request): Response
     {
         $concert = new Concert();
@@ -60,6 +62,7 @@ class EventController extends AbstractController
     }
 
     #[Route('/event/delete/{id}', name: 'app_delete_concert')]
+    #[Security("is_granted('ROLE_ADMIN')")]
     public function delete(int $id): Response
     {
         $concert = $this->entityManager->getRepository(Concert::class)->find($id);
