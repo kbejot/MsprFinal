@@ -1,46 +1,49 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Gérez les informations{% endblock %}
+{% block title %}Gérez les Informations{% endblock %}
 
 {% block body %}
-{% include 'navigation/navbar.html.twig' %}
+    {% include 'navigation/navbar.html.twig' %}
 
-<div class="container mt-4">
-    {{ form_start(form) }}
+    <div class="container mt-4">
+        <h1 class="m-3 text-center ">Créer ou modifier une information</h1>
+        {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': true}}) }}
 
-    <div class="form-group">
-        {{ form_label(form.MessageInfo, "Message d'information", {'label_attr': {'class': 'form-label'}}) }}
-        {{ form_widget(form.MessageInfo, {'attr': {'class': 'form-control'}}) }}
-        {{ form_errors(form.MessageInfo) }}
+        <div class="form-group">
+            {{ form_label(form.MessageInfo, 'Message', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.MessageInfo) }}
+            {{ form_errors(form.MessageInfo, {'attr': {'class': 'text-danger'}}) }}
+        </div>
+
+        <div class="text-center mb-3 mt-3">
+            {{ form_row(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
+            {{ form_end(form) }}
+        </div>
     </div>
 
-<div class="mx-auto text-center mb-3">
-    {{ form_end(form) }}
-</div>
-
-
-</div>
-
-<table class="table">
-<thead>
-    <tr>
-        <th>Message</th>
-    </tr>
-</thead>
-<tbody>
-    {% for info in infos %}
-        <tr>
-            <td>
-                <a href="{{ path('app_delete_info', { 'id': info.id }) }}" 
-                   onclick="return confirm('Êtes-vous sûr de supprimer le message?');">
-                   <i class="fa fa-trash"></i>
-                </a>
-            </td>
-            <td>{{ info.MessageInfo }}</td>
-        </tr>
-    {% endfor %}
-</tbody>
-</table>
-
+    <div class="container mt-5">
+        <table class="table table-hover">
+            <thead class="thead-dark">
+            <tr>
+                <th>Action</th>
+                <th>Message</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for info in infos %}
+                <tr>
+                    <td>
+                        <a href="{{ path('app_delete_info', { 'id': info.id }) }}"
+                           class="btn btn-danger btn-sm"
+                           onclick="return confirm('Êtes-vous sûr de supprimer cette information ?');">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                    </td>
+                    <td>{{ info.MessageInfo }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
 {% endblock %}

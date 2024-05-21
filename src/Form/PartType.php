@@ -26,6 +26,7 @@ class PartType extends AbstractType
                         'maxMessage' => 'Le nom ne peut pas dépasser {{ limit }} caractères',
                     ]),
                 ],
+                'attr' => ['class' => 'form-control'],
             ])
             ->add('save', SubmitType::class, ['label' => 'Ajouter le réseau']);
     }

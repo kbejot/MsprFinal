@@ -3,43 +3,47 @@
 {% block title %}Gérez les réseaux{% endblock %}
 
 {% block body %}
-{% include 'navigation/navbar.html.twig' %}
+    {% include 'navigation/navbar.html.twig' %}
 
-<div class="container mt-4">
-    {{ form_start(form) }}
+    <div class="container mt-4">
+        <h1 class="m-3 text-center ">Créer ou modifier un réseau</h1>
+        {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': true}}) }}
 
-    <div class="form-group">
-        {{ form_label(form.nom, 'Nom du réseau', {'label_attr': {'class': 'form-label'}}) }}
-        {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
-        {{ form_errors(form.nom) }}
+        <div class="form-group">
+            {{ form_label(form.nom, 'Nom du réseau', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.nom) }}
+            {{ form_errors(form.nom, {'attr': {'class': 'text-danger'}}) }}
+        </div>
+
+        <div class="text-center mb-3 mt-3">
+            {{ form_row(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
+            {{ form_end(form) }}
+        </div>
     </div>
 
-    
-    <div class="mx-auto text-center mb-3">
-        {{ form_end(form) }}
-    </div>
-</div>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>Action</th>
-            <th>Nom du réseau</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for reseau in reseaux %}
+    <div class="container mt-5">
+        <table class="table table-hover">
+            <thead class="thead-dark">
             <tr>
-                <td>
-                    <a href="{{ path('app_delete_reseaux', { 'id': reseau.id }) }}" 
-                       onclick="return confirm('Êtes-vous sûr de supprimer le réseau?');">
-                       <i class="fa fa-trash"></i>
-                    </a>
-                </td>
-                <td>{{ reseau.nom }}</td>
+                <th>Action</th>
+                <th>Nom du réseau</th>
             </tr>
-        {% endfor %}
-    </tbody>
-</table>
+            </thead>
+            <tbody>
+            {% for reseau in reseaux %}
+                <tr>
+                    <td>
+                        <a href="{{ path('app_delete_reseaux', { 'id': reseau.id }) }}"
+                           class="btn btn-danger btn-sm"
+                           onclick="return confirm('Êtes-vous sûr de supprimer ce réseau ?');">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                    </td>
+                    <td>{{ reseau.nom }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
 {% endblock %}

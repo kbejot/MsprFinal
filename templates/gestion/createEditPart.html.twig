@@ -3,43 +3,47 @@
 {% block title %}Gérez les Partenaires{% endblock %}
 
 {% block body %}
-{% include 'navigation/navbar.html.twig' %}
+    {% include 'navigation/navbar.html.twig' %}
 
-<div class="container mt-4">
-    {{ form_start(form) }}
+    <div class="container mt-4">
+        <h1 class="m-3 text-center">Créer ou modifier un partenaire</h1>
+        {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': true}}) }}
 
-    <div class="form-group">
-        {{ form_label(form.nom, 'Nom du partenaire', {'label_attr': {'class': 'form-label'}}) }}
-        {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
-        {{ form_errors(form.nom) }}
+        <div class="form-group">
+            {{ form_label(form.nom, 'Nom du partenaire', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.nom) }}
+            {{ form_errors(form.nom) }}
+        </div>
+
+        <div class="text-center mb-3 mt-3">
+            {{ form_row(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
+            {{ form_end(form) }}
+        </div>
     </div>
 
-    
-    <div class="mx-auto text-center mb-3">
-        {{ form_end(form) }}
-    </div>
-</div>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>Action</th>
-            <th>Nom du partenaire</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for partenaire in partenaires %}
+    <div class="container mt-5">
+        <table class="table table-hover">
+            <thead class="thead-dark">
             <tr>
-                <td>
-                    <a href="{{ path('app_delete_part', { 'id': partenaire.id }) }}" 
-                       onclick="return confirm('Êtes-vous sûr de supprimer le réseau?');">
-                       <i class="fa fa-trash"></i>
-                    </a>
-                </td>
-                <td>{{ partenaire.nom }}</td>
+                <th>Action</th>
+                <th>Nom du partenaire</th>
             </tr>
-        {% endfor %}
-    </tbody>
-</table>
+            </thead>
+            <tbody>
+            {% for partenaire in partenaires %}
+                <tr>
+                    <td>
+                        <a href="{{ path('app_delete_part', { 'id': partenaire.id }) }}"
+                           class="btn btn-danger btn-sm"
+                           onclick="return confirm('Êtes-vous sûr de supprimer ce partenaire ?');">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                    </td>
+                    <td>{{ partenaire.nom }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
 {% endblock %}

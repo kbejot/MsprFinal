@@ -28,7 +28,8 @@ class ReseauxType extends AbstractType
                         'minMessage' => 'Le nom doit contenir au moins {{ limit }} caractères.',
                         'maxMessage' => 'Le nom ne peut pas dépasser {{ limit }} caractères.'
                     ]),
-                ]
+                ],
+                'attr' => ['class' => 'form-control'],
             ])
             ->add('save', SubmitType::class, ['label' => 'Ajouter le réseau'])
         ;
