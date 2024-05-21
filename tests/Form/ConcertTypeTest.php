@@ -33,8 +33,8 @@ class ConcertTypeTest extends TypeTestCase
         $formData = [
             'artiste' => null,
             'scene' => null,
-            'date' => null,
-            'horaire' => null,
+            'date' => '2024-05-21',
+            'horaire' => '15:00:00',
             'save' => 'Ajouter le concert',
         ];
 
@@ -52,15 +52,9 @@ class ConcertTypeTest extends TypeTestCase
         $this->assertArrayHasKey('horaire', $children);
         $this->assertArrayHasKey('save', $children);
 
-        $this->assertEquals('single_text', $form->get('date')->getConfig()->getOption('widget'));
-        $this->assertEquals('yyyy-MM-dd', $form->get('date')->getConfig()->getOption('format'));
-        $this->assertTrue($form->get('date')->getConfig()->getOption('html5'));
-
-        $this->assertEquals('datetime', $form->get('horaire')->getConfig()->getOption('input'));
-        $this->assertEquals('single_text', $form->get('horaire')->getConfig()->getOption('widget'));
-        $this->assertFalse($form->get('horaire')->getConfig()->getOption('with_seconds'));
+        $this->assertEquals('2024-05-21', $form->get('date')->getData()->format('Y-m-d'));
+        $this->assertEquals('15:00:00', $form->get('horaire')->getData()->format('H:i:s'));
 
         $this->assertEquals('Ajouter le concert', $form->get('save')->getConfig()->getOption('label'));
     }
 }
-

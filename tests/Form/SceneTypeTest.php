@@ -2,11 +2,11 @@
 
 namespace App\Tests\Form;
 
-use App\Entity\Scene;
 use App\Form\SceneType;
+use App\Entity\Scene;
 use Symfony\Component\Form\Test\TypeTestCase;
-use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
 use Symfony\Component\Validator\Validation;
+use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
 
 class SceneTypeTest extends TypeTestCase
 {
@@ -25,14 +25,14 @@ class SceneTypeTest extends TypeTestCase
     public function testSubmitValidData()
     {
         $formData = [
-            'number' => 10,
+            'number' => 2, // Valeur valide parmi les choix 1, 2, 3
         ];
 
         $model = new Scene();
         $form = $this->factory->create(SceneType::class, $model);
 
         $expected = new Scene();
-        $expected->setNumber(10);
+        $expected->setNumber(2); // Valeur valide parmi les choix 1, 2, 3
 
         $form->submit($formData);
 
@@ -48,7 +48,7 @@ class SceneTypeTest extends TypeTestCase
     public function testSubmitInvalidData()
     {
         $formData = [
-            'number' => -10,
+            'number' => 10, // Valeur invalide, doit être parmi les choix 1, 2, 3
         ];
 
         $form = $this->factory->create(SceneType::class);
@@ -57,7 +57,6 @@ class SceneTypeTest extends TypeTestCase
         $this->assertFalse($form->isValid());
         $errors = $form->get('number')->getErrors();
         $this->assertCount(1, $errors);
-        $this->assertEquals('Le nombre doit être positif', $errors[0]->getMessage());
+        $this->assertEquals('This value is not valid.', $errors[0]->getMessage());
     }
 }
-

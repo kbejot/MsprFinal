@@ -14,11 +14,11 @@ class LoginFormType extends AbstractType
         $builder
             ->add('_username', TextType::class, [
                 'label' => 'Identifiant',
-                'attr' => ['placeholder' => 'Identifiant']
+                'attr' => ['placeholder' => 'Entrez votre identifiant', 'class' => 'form-control'],
             ])
             ->add('_password', PasswordType::class, [
                 'label' => 'Mot de passe',
-                'attr' => ['placeholder' => 'Mot de passe']
+                'attr' => ['placeholder' => 'Entrez votre mot de passe', 'class' => 'form-control']
             ]);
     }
 }

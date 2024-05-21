@@ -25,6 +25,7 @@ class ArtisteType extends AbstractType
                         'maxMessage' => 'Le nom ne peut pas dépasser {{ limit }} caractères',
                     ]),
                 ],
+                'attr' => ['class' => 'form-control'],
             ]);
     }
 
