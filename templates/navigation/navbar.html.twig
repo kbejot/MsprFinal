@@ -19,30 +19,31 @@
                     <a class="nav-link" href="billeterie">Billeterie</a>
                 </li>
                 {% if is_granted('ROLE_ADMIN') %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_event') }}">Gestion concerts</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_info') }}">Gestion informations</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_part') }}">Gestion Partenaires</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_reseaux') }}">Gestion Réseaux</a>
-                </li>
-                 <li class="nav-item">
-                <a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_event') }}">Gestion concerts</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_info') }}">Gestion informations</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_part') }}">Gestion Partenaires</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_reseaux') }}">Gestion Réseaux</a>
+                    </li>
                  {% endif %}
                  {% if app.user == null %}
-                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_login') }}">Connexion</a>
-                </li>
+                     <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_login') }}">Connexion</a>
+                    </li>
+                 {% else  %}
+                     <li class="nav-item">
+                         <a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
+                     </li>
                 {% endif %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('inscription') }}">Inscription</a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('inscription') }}">Inscription</a>
+                    </li>
             </ul>
         </div>
     </div>

@@ -6,6 +6,7 @@ use ApiPlatform\Metadata\ApiResource;
 use App\Repository\ArtisteRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ArtisteRepository::class)]
 #[ORM\Table(name: "artiste")]
@@ -15,12 +16,16 @@ class Artiste
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['concert:read'])]
+
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['concert:read'])]
     private ?string $name = null;
 
     #[ORM\OneToMany(mappedBy: "scene", targetEntity: Concert::class)]
+    #[Groups(['concert:read'])]
     private Collection $concerts;
 
 

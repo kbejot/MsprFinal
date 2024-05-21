@@ -6,3 +6,7 @@ api_platform:
     swagger:
         versions: [3]
     metadata_backward_compatibility_layer: false
+    defaults:
+        attributes:
+            normalization_context: { groups: ['concert:read'] }
+            denormalization_context: { groups: ['concert:write'] }

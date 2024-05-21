@@ -9,10 +9,15 @@ use App\Repository\ConcertRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 #[ORM\Entity(repositoryClass: ConcertRepository::class)]
 #[ORM\Table(name: 'concert')]
-#[ApiResource]
+#[ApiResource(
+    denormalizationContext: ['groups' => ['concert:write']],
+    normalizationContext: ['groups' => ['concert:read']]
+)]
 #[ApiFilter(DateFilter::class, properties: ["date", "horaire"])]
 #[ApiFilter(DateFilter::class, properties: ["scene", "exact"])]
 class Concert
@@ -20,19 +25,24 @@ class Concert
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['concert:read', 'concert:write'])]
     private ?int $id = null;
 
     #[ORM\ManyToOne(targetEntity: Artiste::class, inversedBy: "concerts")]
-    #[ORM\JoinColumn(name: "artiste", referencedColumnName: "id")]
+    #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['concert:read', 'concert:write'])]
     private ?Artiste $artiste = null;
     #[ORM\ManyToOne(targetEntity: Scene::class, inversedBy: "concerts")]
-    #[ORM\JoinColumn(name: "scene", referencedColumnName: "id")]
+    #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['concert:read', 'concert:write'])]
     private ?Scene $scene = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Groups(['concert:read', 'concert:write'])]
     private ?\DateTimeInterface $Date = null;
 
     #[ORM\Column(type: Types::TIME_MUTABLE)]
+    #[Groups(['concert:read', 'concert:write'])]
     private ?\DateTimeInterface $Horaire = null;
 
     public function getId(): ?int
