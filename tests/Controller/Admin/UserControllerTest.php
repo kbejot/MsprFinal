@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Controller\admin;
+namespace App\Tests\Controller\Admin;
 
 use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -72,6 +72,8 @@ class UserControllerTest extends WebTestCase
         $entityManager->persist($user);
         $entityManager->flush();
         $userId = $user->getId();
+        $session = $client->getContainer()->get('session');
+        $session->start();
 
         $crawler = $client->request('GET', '/user/list');
 
