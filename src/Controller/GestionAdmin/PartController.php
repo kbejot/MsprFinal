@@ -39,9 +39,6 @@ class PartController extends AbstractController
             'partenaires' => $parts
         ]);
     }
-    /**
-     * @Route("/part/delete/{id}", name="app_delete_part")
-     */
     #[Route('/part/delete/{id}', name: 'app_delete_part')]
     #[Security("is_granted('ROLE_ADMIN')")]
     public function delete(int $id): Response

@@ -1,15 +1,16 @@
-<?php 
+<?php
 
 namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class UserType extends AbstractType
 {
@@ -19,14 +20,24 @@ class UserType extends AbstractType
             ->add('_email', EmailType::class, [
                 'label' => 'Adresse mail',
                 'required' => true,
+                'constraints' => [
+                    new Assert\NotBlank(['message' => 'L\'adresse mail ne doit pas être vide']),
+                    new Assert\Email(['message' => 'Veuillez entrer une adresse mail valide']),
+                ],
             ])
             ->add('_username', TextType::class, [
                 'label' => 'Identifiant',
                 'required' => true,
+                'constraints' => [
+                    new Assert\NotBlank(['message' => 'L\'identifiant ne doit pas être vide']),
+                ],
             ])
             ->add('_password', PasswordType::class, [
                 'label' => 'Mot de passe',
                 'required' => true,
+                'constraints' => [
+                    new Assert\NotBlank(['message' => 'Le mot de passe ne doit pas être vide']),
+                ],
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Inscrivez-vous',
