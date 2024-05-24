@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\GestionAdmin;
+namespace App\Controller\Admin;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;

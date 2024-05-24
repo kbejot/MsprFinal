@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Controller\GestionAdmin;
+namespace App\Tests\Controller\admin;
 
 use App\Entity\Partenaires;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class PartControllerTest extends WebTestCase
 {
-    private function logInAdmin($client)
+    private function logInAdmin($client): void
     {
         $crawler = $client->request('GET', '/login');
         $form = $crawler->selectButton('Se connecter')->form([
@@ -73,6 +73,9 @@ class PartControllerTest extends WebTestCase
         $entityManager->remove($partenaire);
         $entityManager->flush();
         $client->followRedirect();
+
+        $entityManager->clear();
+
 
         // Vérifier que le partenaire a été supprimé
         $this->assertNull($entityManager->getRepository(Partenaires::class)->find($partenaireId));

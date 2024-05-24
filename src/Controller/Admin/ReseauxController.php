@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\GestionAdmin;
+namespace App\Controller\Admin;
 
 use App\Entity\Reseaux;
 use App\Form\ReseauxType;

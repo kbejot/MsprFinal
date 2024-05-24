@@ -12,13 +12,14 @@
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav">
+                {% if not is_granted('ROLE_ADMIN') %}
                 <li class="nav-item">
                     <a class="nav-link" href="faq">FAQ</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="billeterie">Billeterie</a>
                 </li>
-                {% if is_granted('ROLE_ADMIN') %}
+                {% else %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('app_event') }}">Gestion concerts</a>
                     </li>
@@ -30,6 +31,9 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('app_reseaux') }}">Gestion Réseaux</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('user_list') }}">Gestion Utilisateurs</a>
                     </li>
                  {% endif %}
                  {% if app.user == null %}
