@@ -1,60 +1,58 @@
 <?php
 
-namespace App\Controller\Admin;
+namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\UserType;
 use Doctrine\ORM\EntityManagerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends AbstractController
 {
-    public function __construct(private readonly EntityManagerInterface $entityManager){}
-
-    #[Route(path: '/user/list', name: 'user_list')]
-    #[Security("is_granted('ROLE_ADMIN')")]
-    public function list(): Response
+    #[Route('/inscription', name: 'inscription')]
+    public function inscription(Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $encoder): Response
     {
-        $users = $this->entityManager->getRepository(User::class)->findAll();
+        // Create a new User entity
+        $user = new User();
 
-        return $this->render('admin/userList.html.twig', [
-            'users' => $users,
+        // Create the registration form using the UserType form class
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+
+        // Handle form submission
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Encode the password
+            $encodedPassword = $encoder->encodePassword($user, $user->getPassword());
+
+            // Set user details
+            $user->setUsername($form->get('_username')->getData());
+            $user->setEmail($form->get('_email')->getData());
+            $user->setRoles([User::ROLE_USER]);
+            $user->setPassword($encodedPassword);
+
+            // Persist the new user entity to the database
+            $em->persist($user);
+            // Flush the changes to the database
+            $em->flush();
+
+            // Redirect to the login page
+            return $this->redirectToRoute('login');
+        }
+
+        // Render the registration template with the form
+        return $this->render('user/inscription.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 
-    #[Route(path: '/user/{id}/edit', name: 'user_edit')]
-    #[Security("is_granted('ROLE_ADMIN')")]
-    public function edit(Request $request, User $user): Response
+    #[Route('/dashboard', name: 'admin_dashboard')]
+    public function adminDashboard(): Response
     {
-        if ($request->isMethod('POST')) {
-            $role = $request->request->get('role');
-            if ($role === 'ROLE_ADMIN' || $role === 'ROLE_USER') {
-                $user->setRoles([$role]);
-                $this->entityManager->flush();
-                $this->addFlash('success', 'Rôle mis à jour avec succès');
-            }
-            return $this->redirectToRoute('user_list');
-        }
-
-        return $this->render('admin/userEdit.html.twig', [
-            'user' => $user,
-        ]);
+        // Render the admin dashboard template
+        return $this->render('admin/dashboard.html.twig');
     }
-
-    #[Route(path: '/user/{id}/delete', name: 'user_delete', methods: ['POST'])]
-    #[Security("is_granted('ROLE_ADMIN')")]
-    public function delete(Request $request, User $user): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
-            $this->entityManager->remove($user);
-            $this->entityManager->flush();
-            $this->addFlash('success', 'Utilisateur supprimé avec succès');
-        }
-
-        return $this->redirectToRoute('user_list');
-    }
-
 }
