@@ -16,15 +16,7 @@ class ArtisteType extends AbstractType
         $builder
             ->add('name', TextType::class, [
                 'label' => false,
-                'constraints' => [
-                    new Assert\NotBlank(['message' => 'Le nom ne peut pas être vide']),
-                    new Assert\Length([
-                        'min' => 2,
-                        'minMessage' => 'Le nom doit comporter au moins {{ limit }} caractères',
-                        'max' => 50,
-                        'maxMessage' => 'Le nom ne peut pas dépasser {{ limit }} caractères',
-                    ]),
-                ],
+                'required' => true,
                 'attr' => ['class' => 'form-control'],
             ]);
     }
