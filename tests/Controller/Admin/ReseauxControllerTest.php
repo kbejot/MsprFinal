@@ -3,8 +3,10 @@
 namespace App\Tests\Controller\Admin;
 
 use App\Entity\Reseaux;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+#[Group('controller')]
 class ReseauxControllerTest extends WebTestCase
 {
     private function logInAdmin($client): void

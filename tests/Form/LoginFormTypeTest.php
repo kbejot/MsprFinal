@@ -3,10 +3,12 @@
 namespace App\Tests\Form;
 
 use App\Form\LoginFormType;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\Form\Test\TypeTestCase;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
 
+#[Group('form')]
 class LoginFormTypeTest extends TypeTestCase
 {
     protected function getExtensions(): array

@@ -3,8 +3,10 @@
 namespace App\Tests\Controller\Admin;
 
 use App\Entity\Infos;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+#[Group('controller')]
 class InfoControllerTest extends WebTestCase
 {
     private function logInAdmin($client): void

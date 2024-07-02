@@ -4,10 +4,12 @@ namespace App\Tests\Form;
 
 use App\Entity\Artiste;
 use App\Form\ArtisteType;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\Form\Test\TypeTestCase;
 use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
 use Symfony\Component\Validator\Validation;
 
+#[Group('form')]
 class ArtisteTypeTest extends TypeTestCase
 {
     protected function getExtensions()

@@ -3,9 +3,11 @@
 namespace App\Tests\Controller\Admin;
 
 use App\Entity\User;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
+#[Group('controller')]
 class UserControllerTest extends WebTestCase
 {
     private function logInAdmin($client): void

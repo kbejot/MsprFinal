@@ -4,11 +4,13 @@ namespace App\Tests\Form;
 
 use App\Entity\User;
 use App\Form\UserType;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\Form\PreloadedExtension;
 use Symfony\Component\Form\Test\TypeTestCase;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
 
+#[Group('form')]
 class UserTypeTest extends TypeTestCase
 {
     protected function getExtensions(): array

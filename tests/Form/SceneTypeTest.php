@@ -4,10 +4,12 @@ namespace App\Tests\Form;
 
 use App\Form\SceneType;
 use App\Entity\Scene;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\Form\Test\TypeTestCase;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
 
+#[Group('form')]
 class SceneTypeTest extends TypeTestCase
 {
     protected function getExtensions()

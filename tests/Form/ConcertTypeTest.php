@@ -5,11 +5,13 @@ namespace App\Tests\Form;
 use App\Form\ArtisteType;
 use App\Form\ConcertType;
 use App\Form\SceneType;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\Form\PreloadedExtension;
 use Symfony\Component\Form\Test\TypeTestCase;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
 
+#[Group('form')]
 class ConcertTypeTest extends TypeTestCase
 {
     protected function getExtensions(): array

@@ -4,10 +4,12 @@ namespace App\Tests\Form;
 
 use App\Entity\Partenaires;
 use App\Form\PartType;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\Form\Test\TypeTestCase;
 use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
 use Symfony\Component\Validator\Validation;
 
+#[Group('form')]
 class PartTypeTest extends TypeTestCase
 {
     protected function getExtensions()

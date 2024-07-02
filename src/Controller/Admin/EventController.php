@@ -61,18 +61,30 @@ class EventController extends AbstractController
         ]);
     }
 
-    #[Route('/event/delete/{id}', name: 'app_delete_concert')]
-    #[Security("is_granted('ROLE_ADMIN')")]
-    public function delete(int $id): Response
-    {
-        $concert = $this->entityManager->getRepository(Concert::class)->find($id);
+    /**
+ * Deletes a concert entity by its ID.
+ *
+ * @Route("/event/delete/{id}", name="app_delete_concert")
+ * @Security("is_granted('ROLE_ADMIN')")
+ *
+ * @param int $id The ID of the concert to delete.
+ * @return \Symfony\Component\HttpFoundation\Response Redirects to the concert list page.
+ */
+#[Route('/event/delete/{id}', name: 'app_delete_concert')]
+#[Security("is_granted('ROLE_ADMIN')")]
+public function delete(int $id): Response
+{
+    // Fetch the concert entity by its ID
+    $concert = $this->entityManager->getRepository(Concert::class)->find($id);
 
-        if ($concert) {
-            $this->entityManager->remove($concert);
-            $this->entityManager->flush();
-        }
-
-        return $this->redirectToRoute('app_event');
+    // If the concert entity exists, remove it from the database
+    if ($concert) {
+        $this->entityManager->remove($concert);
+        $this->entityManager->flush();
     }
+
+    // Redirect to the concert list page
+    return $this->redirectToRoute('app_event');
+}
 
 }
